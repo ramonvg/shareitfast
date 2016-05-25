@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!-- Coded by https://github.com/ramonvg -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>ShareItFast</title>
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js" charset="utf-8"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+  <style>
+    body {
+     background-color: #1F2124;
+    }
+
+    .upload-form {
+      background-color: #F68657;
+      padding: 50px;
+      border-radius: 5px;
+      box-sizing: border-box;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 400px;
+      height: 250px;
+      margin-top: -125px;
+      margin-left: -200px;
+
+    }
+    .upload-form:hover {
+     transition: 0.3s;
+     -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.10);
+     -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.10);
+     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.10);
+    }
+
+    .upload-btn {
+     position: absolute;
+     left: 50%;
+     margin-left: -76px;
+    }
+
+    .upload-text, .file-path, .upload-link {
+     color: white;
+    }
+
+    .upload-link {
+     background-color: #F6B352;
+     padding: 5px 20px 5px 20px;
+     width: 100%;
+     box-sizing: border-box;
+     text-align: center;
+    }
+
+  </style>
+</head>
+
+<body>
+ {% if error or url %}
+ <div class="upload-link">
+  {% if error %}
+  <span class="flow-text">{{error}}</span>
+  {% endif %}
+  {% if url %}
+  <span class="flow-text">Your file is here: <a href="{{url}}">{{ request.META.HTTP_HOST }}{{url}}</a></span>
+  {% endif %}
+ </div>
+ {% endif %}
+  <div class="upload-form">
+    <form action="/" method="POST" enctype="multipart/form-data">
+      <span class="flow-text upload-text">Select your file</span>
+      {% csrf_token %}
+
+      <div class="file-field input-field">
+        <div class="btn grey darken-3">
+          <span>File</span>
+          <input type="file" name="file">
+        </div>
+        <div class="file-path-wrapper">
+          <input class="file-path validate" type="text">
+        </div>
+      </div>
+      <button class="btn grey darken-3 waves-effect waves-light upload-btn" type="submit" name="action">Upload
+        <i class="material-icons right">send</i>
+      </button>
+    </form>
+  </div>
+</body>
+
+</html>
